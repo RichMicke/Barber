@@ -1,10 +1,11 @@
 class CustomersController < ApplicationController
-  before_action :set_costume, only: %i[show update destroy]
+  before_action :set_costumer, only: %i[show update destroy]
 
   def index
-    @customer= Customers.all 
-    render json: @customer 
+    @customer = Customer.all
+    render json: @customer
   end
+  
 
   def show
     render json: @customer
@@ -40,6 +41,6 @@ class CustomersController < ApplicationController
   end 
 
   def customer_params
-    params.require(:customer).permit(:name, :phone, :email)
+    params.require(:customers).permit(:name, :phone, :email)
   end
 end

@@ -1,18 +1,18 @@
+
 class CustomersController < ApplicationController
-  before_action :set_costumer, only: %i[show update destroy]
+  before_action :set_customer, only: [:show, :update, :destroy]
 
   def index
-    @customer = Customer.all
-    render json: @customer
+    @customers = Customer.all
+    render json: @customers
   end
-  
 
   def show
     render json: @customer
   end
 
   def create 
-    @customer = Customers.new(customer_params)
+    @customer = Customer.new(customer_params)
 
     if @customer.save
       render json: @customer, status: :created, location: @customer
@@ -22,10 +22,10 @@ class CustomersController < ApplicationController
   end
 
   def update
-    if @customer.update(costumer_params)
+    if @customer.update(customer_params)
       render json: @customer
     else 
-      render json: @customer, status: :unprocessable_entity
+      render json: @customer.errors, status: :unprocessable_entity
     end
   end
 
@@ -37,10 +37,10 @@ class CustomersController < ApplicationController
   private 
   
   def set_customer
-    @customer= Customers.find(params[:id])
+    @customer = Customer.find(params[:id])
   end 
 
   def customer_params
-    params.require(:customers).permit(:name, :phone, :email)
+    params.require(:customer).permit(:name, :phone, :email)
   end
 end
